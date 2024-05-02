@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  firstName  String
+  lastName   String
+  patronymic String
+  password   String
+  roles      String[] @default(["USER"])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CompetenceCategory {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  slug        String @unique
+
+  image   Image  @relation(fields: [imageId], references: [id])
+  imageId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  competences Competence[]
+}
+
+model Competence {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  slug        String @unique
+
+  image   Image  @relation(fields: [imageId], references: [id])
+  imageId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  competenceCategory   CompetenceCategory @relation(fields: [competenceCategoryId], references: [id])
+  competenceCategoryId String
+
+  announcements Announcement[]
+  news          News[]
+  tasks         Task[]
+  questions     Question[]
+
+  @@index([id, slug])
+}
+
+model Announcement {
+  id      String @id @default(uuid())
+  title   String
+  content String
+  slug    String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  competence   Competence @relation(fields: [competenceId], references: [id])
+  competenceId String
+
+  @@index([id, slug])
+}
+
+model Task {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  slug        String @unique
+
+  image   Image  @relation(fields: [imageId], references: [id])
+  imageId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  competence   Competence @relation(fields: [competenceId], references: [id])
+  competenceId String
+
+  @@index([id, slug])
+}
+
+model News {
+  id      String @id @default(uuid())
+  title   String
+  content String
+  slug    String @unique
+
+  images         Image[]
+  previewImage   Image   @relation(fields: [previewImageId], references: [id], name: "previewImage")
+  previewImageId String  @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  competence   Competence @relation(fields: [competenceId], references: [id])
+  competenceId String
+
+  @@index([id, slug])
+}
+
+model Question {
+  id       String  @id @default(uuid())
+  title    String
+  content  String
+  isOpened Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  competence   Competence @relation(fields: [competenceId], references: [id])
+  competenceId String
+
+  @@index([id])
+}
+
+model Image {
+  id String @id @default(uuid())
+
+  webPath    String
+  systemPath String
+
+  CompetenceCategory CompetenceCategory?
+  Competence         Competence?
+  Task               Task?
+  NewsPreview        News?               @relation(name: "previewImage")
+  News               News?               @relation(fields: [newsId], references: [id])
+  newsId             String?
+}
+
+model File {
+  id String @id @default(uuid())
+
+  webPath    String
+  systemPath String
+
+  name String
+
+  type String
+  size String
+
+  @@index([id])
+}
