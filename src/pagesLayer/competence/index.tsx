@@ -1,4 +1,4 @@
-import { Heading, HStack, VStack } from "@chakra-ui/react";
+import { Box, Heading, HStack, VStack } from "@chakra-ui/react";
 import { Announcements } from "@/widgets/announcements";
 import { Files } from "@/widgets/files";
 import { News } from "@/widgets/news";
@@ -8,7 +8,7 @@ import { CompetenceDto } from "@/entities/competences";
 import { getAllFiles } from "@/entities/files";
 import { getAllNews } from "@/entities/news";
 import { getAllTasks } from "@/entities/tasks";
-import { AddButton, HeadingUpper } from "@/shared";
+import { AddButton, BackButton, HeadingUpper } from "@/shared";
 
 export function Competence({ init }: { init: unknown }) {
     const { title, slug, competenceCategory } = init as CompetenceDto;
@@ -27,6 +27,9 @@ export function Competence({ init }: { init: unknown }) {
             marginY={10}
             userSelect={"none"}
         >
+            <Box position={"absolute"} alignSelf={"start"} right={"20%"}>
+                <BackButton />
+            </Box>
             <VStack spacing={20}>
                 <VStack spacing={8}>
                     <VStack maxWidth={"60%"}>

@@ -16,6 +16,19 @@ export const getAllTasks = cache(async function (
             : undefined,
         take: 6,
         skip: offset ? 1 : 0,
+        include: {
+            competence: {
+                select: {
+                    slug: true,
+                    competenceCategory: {
+                        select: {
+                            slug: true,
+                        },
+                    },
+                },
+            },
+            image: true,
+        },
         ...(competence &&
             competenceCategory && {
                 where: {

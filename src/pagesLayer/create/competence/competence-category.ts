@@ -1,29 +1,54 @@
 "use server";
 
-import { saveFile } from "@/features/file-control";
+import { isImageUnique } from "@/pages/create/is-image-unique";
+import { saveImage } from "@/features/image-control";
 import { createId, prisma } from "@/shared";
+import { competenceCategorySchema, CompetenceCategorySchema } from "../schemas";
 
-export async function competenceCategoryCreate(formData: FormData) {
+export async function competenceCategoryCreate(
+    _prevState: any,
+    formData: FormData,
+) {
+    const data = Object.fromEntries(
+        formData.entries(),
+    ) as CompetenceCategorySchema;
+
+    const check = competenceCategorySchema.safeParse(data);
+    if (!check.success)
+        return {
+            errors: check.error.flatten().fieldErrors,
+        };
+
+    const { title, description, slug } = data;
+
     const imageId = createId();
-    const webPath = `competence-category/${imageId}`;
+    const webPath = `competence-categories/${imageId}`;
 
-    if (await prisma.image.findUnique({ where: { webPath } }))
-        throw new Error("Image already exists");
+    const isImageUniqueCheck = await isImageUnique(webPath);
+    if (!isImageUniqueCheck.success) return isImageUniqueCheck;
 
-    const systemPath = await saveFile(
-        formData.get("image") as File,
-        imageId,
-        "competence-category",
-    );
+    try {
+        const systemPath = await saveImage(
+            formData.get("image") as File,
+            imageId,
+            "competence-categories",
+        );
 
-    return prisma.competenceCategory.create({
-        data: {
-            title: formData.get("title") as string,
-            description: formData.get("description") as string,
-            slug: formData.get("slug") as string,
-            image: {
-                create: { systemPath, webPath },
+        await prisma.competenceCategory.create({
+            data: {
+                title,
+                description,
+                slug,
+                image: {
+                    create: { systemPath, webPath },
+                },
             },
-        },
-    });
+        });
+    } catch (e) {
+        if ((e as Error).cause instanceof File)
+            return { errors: { image: [(e as Error).message] } };
+        else return { errors: { database: [(e as Error).message] } };
+    }
+
+    return { message: "OK" };
 }

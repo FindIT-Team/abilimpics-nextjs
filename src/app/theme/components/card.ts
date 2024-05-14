@@ -39,6 +39,7 @@ const rowFreshVariant = {
     ...freshVariant,
     container: {
         ...freshVariant.container,
+        justifyContent: "center",
         flexDirection: "row",
         gap: 5,
         backgroundSize: "200%",
@@ -96,4 +97,7 @@ const variants = {
 
 export const Card = defineMultiStyleConfig({
     variants,
+    baseStyle: {
+        container: { overflow: "hidden" },
+    },
 });

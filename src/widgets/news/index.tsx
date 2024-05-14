@@ -23,6 +23,7 @@ export function News({ initPack }: { initPack: Promise<unknown[]> }) {
                 placeContent={"center center"}
             >
                 {packs.map((pack, index) => (
+                    // todo: fallback
                     <Suspense key={index}>
                         <Packer Delegate={NewsCard} packPromise={pack} />
                     </Suspense>

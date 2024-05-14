@@ -5,18 +5,12 @@ import { useParams } from "next/navigation";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { FormProvider } from "@/pages/create";
-import {
-    PendingProvider,
-    SingleFileField,
-    SlugField,
-    SubmitButton,
-} from "@/shared";
+import { PendingProvider, SingleFileField, SlugField } from "@/shared";
 import { competenceCreate } from "./competence";
 import { competenceCategoryCreate } from "./competence-category";
 
 export function CreateCompetence() {
     const { competenceCategory } = useParams();
-
     const { register } = useFormContext();
 
     return (
@@ -55,8 +49,6 @@ export function CreateCompetence() {
                     />
                 )}
             </VStack>
-
-            <SubmitButton />
         </FormProvider>
     );
 }

@@ -14,9 +14,12 @@ export function Files({ initPack }: { initPack: Promise<unknown[]> }) {
     return (
         <>
             <Grid
+                width={"full"}
+                minWidth={"800px"}
+                gridTemplateColumns={"repeat(1, minmax(1fr, 800px)"}
+                gridAutoRows={"200px"}
                 gap={5}
                 padding={5}
-                gridAutoColumns={"1000px"}
                 placeContent={"center center"}
             >
                 {packs.map((pack, index) => (

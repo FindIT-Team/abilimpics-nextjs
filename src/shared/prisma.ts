@@ -1,15 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 
-class Prisma {
-    private static instance: PrismaClient;
-
-    public static getInstance(): PrismaClient {
-        if (!Prisma.instance) {
-            Prisma.instance = new PrismaClient();
-        }
-
-        return Prisma.instance;
-    }
+declare global {
+    var prisma: PrismaClient; // This must be a `var` and not a `let / const`
 }
 
-export const prisma = Prisma.getInstance();
+let prisma: PrismaClient;
+
+if (process.env.NODE_ENV === "production") {
+    prisma = new PrismaClient();
+} else {
+    if (!global.prisma) {
+        global.prisma = new PrismaClient();
+    }
+    prisma = global.prisma;
+}
+
+export { prisma };

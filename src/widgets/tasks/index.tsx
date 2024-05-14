@@ -15,9 +15,8 @@ export function Tasks({ initPack }: { initPack: Promise<unknown[]> }) {
     return (
         <>
             <Grid
-                gridTemplateColumns={"repeat(auto-fill, 350px)"}
-                gridAutoRows={"1px"}
-                width={"full"}
+                gridTemplateColumns={"repeat(3, 350px)"}
+                gridAutoRows={"400px"}
                 gap={5}
                 padding={5}
                 placeContent={"center center"}
