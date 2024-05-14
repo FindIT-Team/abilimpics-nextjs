@@ -1,6 +1,7 @@
 "use client";
 
 import { Grid } from "@chakra-ui/react";
+import { useParams } from "next/navigation";
 import React, { Suspense, useState } from "react";
 import { MoreButton } from "@/features/more-button";
 import { NewsCard } from "@/entities/news";
@@ -9,6 +10,7 @@ import { Packer } from "@/shared";
 
 export function News({ initPack }: { initPack: Promise<unknown[]> }) {
     const [packs, setPacks] = useState([initPack]);
+    const { competence, competenceCategory } = useParams();
 
     return (
         <>
@@ -29,7 +31,13 @@ export function News({ initPack }: { initPack: Promise<unknown[]> }) {
             <MoreButton
                 packs={packs}
                 setPacks={setPacks}
-                fetchFunc={getAllNews}
+                fetchFunc={(offset) =>
+                    getAllNews(
+                        offset,
+                        competence as string,
+                        competenceCategory as string,
+                    )
+                }
             />
         </>
     );

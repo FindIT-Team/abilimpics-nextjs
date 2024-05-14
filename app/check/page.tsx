@@ -1,9 +1,9 @@
-import { CompetenceCategoryCard } from "@/entities/competence-categories";
+import { Button } from "@chakra-ui/react";
 
 export default function Page() {
     return (
         <main>
-            <CompetenceCategoryCard data={{ title: "djasjj" }} />
+            <Button></Button>
         </main>
     );
 }

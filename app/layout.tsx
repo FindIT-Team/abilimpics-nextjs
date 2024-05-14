@@ -6,6 +6,8 @@ import { BackToTop } from "@/features/back-to-top";
 import { inter } from "@/shared";
 import { Providers } from "./providers";
 
+export const metadata = { title: "Абилимпикс - Москва" };
+
 export default function RootLayout({
     children,
 }: Readonly<{

@@ -16,7 +16,8 @@ const nextConfig = {
     experimental: {
         serverActions:
             {
-                allowedOrigins: ["web", "findit.test"]
+                allowedOrigins: ["web", "findit.test"],
+                bodySizeLimit: "10mb",
             }
     }
 };

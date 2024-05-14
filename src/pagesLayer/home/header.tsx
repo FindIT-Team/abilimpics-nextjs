@@ -1,5 +1,4 @@
-import { Grid, VStack } from "@chakra-ui/react";
-import { Image } from "@/shared";
+import { Grid, Image, VStack } from "@/shared";
 import { Heading } from "./heading";
 
 export function Header() {

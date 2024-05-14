@@ -32,6 +32,8 @@ services:
         - ENV=development
     expose:
       - "80:80"
+    volumes:
+      - ./storage:/storage:rw
     ports:
       - "5555:5555"
 #      - "80:80"

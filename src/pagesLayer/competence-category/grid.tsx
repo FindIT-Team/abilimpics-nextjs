@@ -1,20 +1,21 @@
 "use client";
 
-import { Grid } from "@chakra-ui/react";
+import { useParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { MoreButton } from "@/features/more-button";
 import { CompetenceCard } from "@/entities/competences";
 import { getAllCompetences } from "@/entities/competences/queries";
-import { Packer } from "@/shared";
+import { Grid, Packer } from "@/shared";
 
 export function CompetenceCategoryGrid({
-    slug,
     initPack,
 }: {
-    slug: string;
     initPack: Promise<unknown[]>;
 }) {
+    // TODO: IT'S WIDGET
+    const { competenceCategory } = useParams();
     const [packs, setPacks] = useState([initPack]);
+
     return (
         <>
             <Grid
@@ -44,7 +45,9 @@ export function CompetenceCategoryGrid({
             <MoreButton
                 packs={packs}
                 setPacks={setPacks}
-                fetchFunc={(offset?: string) => getAllCompetences(slug, offset)}
+                fetchFunc={(offset?: string) =>
+                    getAllCompetences(competenceCategory as string, offset)
+                }
             />
         </>
     );

@@ -16,11 +16,12 @@
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.13.0",
     "framer-motion": "^11.1.7",
-    "next": "14.2.3",
-    "react": "^18",
-    "react-dom": "^18",
+    "next": "latest",
+    "react": "canary",
+    "react-dom": "canary",
     "react-hook-form": "^7.51.4",
     "react-icons": "^5.2.0",
+    "slug": "^9.0.0",
     "zod": "^3.23.6"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/slug": "^5.0.8",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",

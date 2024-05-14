@@ -9,5 +9,14 @@ export const getOneCompetence = cache(async function (
 ) {
     return prisma.competence.findUnique({
         where: { slug, competenceCategory: { slug: categorySlug } },
+        select: {
+            title: true,
+            slug: true,
+            competenceCategory: {
+                select: {
+                    slug: true,
+                },
+            },
+        },
     });
 });

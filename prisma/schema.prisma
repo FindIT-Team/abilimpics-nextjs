@@ -60,6 +60,7 @@ model Competence {
   news          News[]
   tasks         Task[]
   questions     Question[]
+  files         File[]
 
   @@index([id, slug])
 }
@@ -134,8 +135,8 @@ model Question {
 model Image {
   id String @id @default(uuid())
 
-  webPath    String
-  systemPath String
+  webPath    String @unique
+  systemPath String @unique
 
   CompetenceCategory CompetenceCategory?
   Competence         Competence?
@@ -143,6 +144,8 @@ model Image {
   NewsPreview        News?               @relation(name: "previewImage")
   News               News?               @relation(fields: [newsId], references: [id])
   newsId             String?
+
+  @@index([id])
 }
 
 model File {
@@ -155,6 +158,9 @@ model File {
 
   type String
   size String
+
+  competence   Competence? @relation(fields: [competenceId], references: [id])
+  competenceId String?
 
   @@index([id])
 }
