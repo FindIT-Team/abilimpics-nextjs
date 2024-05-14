@@ -1,6 +1,5 @@
 import { Grid, VStack } from "@chakra-ui/react";
-import { Image } from "@/shared";
-import { Heading } from "./heading";
+import { HeadingUpper, Image } from "@/shared";
 
 export function Header() {
     return (
@@ -16,8 +15,8 @@ export function Header() {
                 justifySelf={"end"}
             />
             <VStack textAlign={"center"}>
-                <Heading>Компетенции Абилимпикс</Heading>
-                <Heading>Москва</Heading>
+                <HeadingUpper>Компетенции Абилимпикс</HeadingUpper>
+                <HeadingUpper>Москва</HeadingUpper>
             </VStack>
             <Image
                 src={"/emblem.webp"}

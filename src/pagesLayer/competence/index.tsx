@@ -7,6 +7,7 @@ import { CompetenceDto } from "@/entities/competences";
 import { getAllFiles } from "@/entities/files";
 import { getAllNews } from "@/entities/news";
 import { getAllTasks } from "@/entities/tasks";
+import { HeadingUpper } from "@/shared";
 import { FileGrid } from "./file-grid";
 
 export function Competence({ init }: { init: unknown }) {
@@ -27,7 +28,7 @@ export function Competence({ init }: { init: unknown }) {
                     </VStack>
                 </VStack>
                 <VStack spacing={8}>
-                    <Heading as={"h5"}>Документация</Heading>
+                    <HeadingUpper>Документация</HeadingUpper>
                     <FileGrid
                         initPack={getAllFiles(competenceCategory.slug, slug)}
                     />
@@ -35,13 +36,17 @@ export function Competence({ init }: { init: unknown }) {
                 <VStack spacing={8}></VStack>
                 <VStack spacing={8}></VStack>
                 <VStack spacing={8}>
-                    <Heading textTransform={"uppercase"}>Новости</Heading>
+                    <HeadingUpper textTransform={"uppercase"}>
+                        Новости
+                    </HeadingUpper>
                     <News
                         initPack={getAllNews(competenceCategory.slug, slug)}
                     />
                 </VStack>
                 <VStack spacing={8}>
-                    <Heading textTransform={"uppercase"}>Объявления</Heading>
+                    <HeadingUpper textTransform={"uppercase"}>
+                        Объявления
+                    </HeadingUpper>
                     <Announcements
                         initPack={getAllAnnouncements(
                             competenceCategory.slug,
@@ -50,9 +55,9 @@ export function Competence({ init }: { init: unknown }) {
                     />
                 </VStack>
                 <VStack spacing={8}>
-                    <Heading textTransform={"uppercase"}>
+                    <HeadingUpper textTransform={"uppercase"}>
                         Основные задачи
-                    </Heading>
+                    </HeadingUpper>
                     <Tasks
                         initPack={getAllTasks(competenceCategory.slug, slug)}
                     />

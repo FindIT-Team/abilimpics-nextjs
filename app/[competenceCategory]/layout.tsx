@@ -13,7 +13,7 @@ export async function generateMetadata({
     return { title: title + " | Абилимпикс - Москва" };
 }
 
-export default function RootLayout({
+export default function Layout({
     children,
     params: { competenceCategory },
 }: Readonly<{

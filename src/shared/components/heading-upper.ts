@@ -2,6 +2,6 @@
 
 import { chakra, Heading as ChakraHeading } from "@chakra-ui/react";
 
-export const Heading = chakra(ChakraHeading, {
+export const HeadingUpper = chakra(ChakraHeading, {
     baseStyle: { textTransform: "uppercase" },
 });

@@ -6,3 +6,4 @@ export * from "./multi-file-field";
 export * from "./submit-button";
 export * from "./add-button";
 export * from "./image";
+export * from "./heading-upper";

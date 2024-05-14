@@ -9,9 +9,8 @@ import { getAllAnnouncements } from "@/entities/announcements";
 import { getAllCompetenceCategories } from "@/entities/competence-categories";
 import { getAllNews } from "@/entities/news";
 import { getAllTasks } from "@/entities/tasks";
-import { AddButton } from "@/shared";
+import { AddButton, HeadingUpper } from "@/shared";
 import { Header } from "./header";
-import { Heading } from "./heading";
 
 export function Home() {
     return (
@@ -31,15 +30,15 @@ export function Home() {
                     />
                 </VStack>
                 <VStack spacing={5}>
-                    <Heading>Объявления</Heading>
+                    <HeadingUpper>Объявления</HeadingUpper>
                     <Announcements initPack={getAllAnnouncements()} />
                 </VStack>
                 <VStack id={"news"} spacing={5}>
-                    <Heading>Новости</Heading>
+                    <HeadingUpper>Новости</HeadingUpper>
                     <News initPack={getAllNews()} />
                 </VStack>
                 <VStack id={"tasks"} spacing={5}>
-                    <Heading>Основные задачи</Heading>
+                    <HeadingUpper>Основные задачи</HeadingUpper>
                     <Tasks initPack={getAllTasks()} />
                 </VStack>
                 <Map />
