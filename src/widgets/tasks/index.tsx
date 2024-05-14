@@ -1,6 +1,7 @@
 "use client";
 
 import { Grid } from "@chakra-ui/react";
+import { useParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { MoreButton } from "@/features/more-button";
 import { TaskCard } from "@/entities/tasks";
@@ -8,6 +9,7 @@ import { getAllTasks } from "@/entities/tasks/queries";
 import { Packer } from "@/shared";
 
 export function Tasks({ initPack }: { initPack: Promise<unknown[]> }) {
+    const { competence, competenceCategory } = useParams();
     const [packs, setPacks] = useState([initPack]);
 
     return (
@@ -29,7 +31,13 @@ export function Tasks({ initPack }: { initPack: Promise<unknown[]> }) {
             <MoreButton
                 packs={packs}
                 setPacks={setPacks}
-                fetchFunc={getAllTasks}
+                fetchFunc={(offset) =>
+                    getAllTasks(
+                        competenceCategory as string,
+                        competence as string,
+                        offset,
+                    )
+                }
             />
         </>
     );

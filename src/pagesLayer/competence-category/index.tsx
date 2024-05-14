@@ -1,9 +1,9 @@
 import { HStack, Text, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
+import { Competences } from "@/widgets/competences";
 import { CompetenceCategoryDto } from "@/entities/competence-categories";
 import { getAllCompetences } from "@/entities/competences";
 import { AddButton, HeadingUpper } from "@/shared";
-import { CompetenceCategoryGrid } from "./grid";
 
 export function CompetenceCategory({ init }: { init: unknown }) {
     const { title, description, slug } = init as CompetenceCategoryDto;
@@ -24,9 +24,7 @@ export function CompetenceCategory({ init }: { init: unknown }) {
                         </Suspense>
                     </VStack>
                     <AddButton />
-                    <CompetenceCategoryGrid
-                        initPack={getAllCompetences(slug)}
-                    />
+                    <Competences initPack={getAllCompetences(slug)} />
                 </VStack>
             </VStack>
         </HStack>
