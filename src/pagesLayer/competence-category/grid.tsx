@@ -1,11 +1,12 @@
 "use client";
 
+import { Grid } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { MoreButton } from "@/features/more-button";
 import { CompetenceCard } from "@/entities/competences";
 import { getAllCompetences } from "@/entities/competences/queries";
-import { Grid, Packer } from "@/shared";
+import { Packer } from "@/shared";
 
 export function CompetenceCategoryGrid({
     initPack,

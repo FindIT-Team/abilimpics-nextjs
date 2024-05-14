@@ -1,3 +1,4 @@
+import { HStack, VStack } from "@chakra-ui/react";
 import { Announcements } from "@/widgets/announcements";
 import { CompetenceCategories } from "@/widgets/competence-categories";
 import { Map } from "@/widgets/map";
@@ -8,7 +9,7 @@ import { getAllAnnouncements } from "@/entities/announcements";
 import { getAllCompetenceCategories } from "@/entities/competence-categories";
 import { getAllNews } from "@/entities/news";
 import { getAllTasks } from "@/entities/tasks";
-import { AddButton, HStack, VStack } from "@/shared";
+import { AddButton } from "@/shared";
 import { Header } from "./header";
 import { Heading } from "./heading";
 
@@ -24,7 +25,7 @@ export function Home() {
                 <VStack spacing={8} id={"competence-categories"}>
                     <Header />
                     <SearchCompetence />
-                    <AddButton href={"/create"} />
+                    <AddButton />
                     <CompetenceCategories
                         initPack={getAllCompetenceCategories()}
                     />

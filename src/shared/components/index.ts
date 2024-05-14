@@ -5,3 +5,4 @@ export * from "./pending-provider";
 export * from "./multi-file-field";
 export * from "./submit-button";
 export * from "./add-button";
+export * from "./image";

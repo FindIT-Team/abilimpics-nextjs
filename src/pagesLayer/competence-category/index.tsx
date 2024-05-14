@@ -1,9 +1,8 @@
-import { useParams } from "next/navigation";
+import { Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
 import { CompetenceCategoryDto } from "@/entities/competence-categories";
 import { getAllCompetences } from "@/entities/competences";
-import { AddButton, Heading, HStack, Text, VStack } from "@/shared";
-import { Create } from "./create";
+import { AddButton } from "@/shared";
 import { CompetenceCategoryGrid } from "./grid";
 
 export function CompetenceCategory({ init }: { init: unknown }) {
@@ -24,10 +23,7 @@ export function CompetenceCategory({ init }: { init: unknown }) {
                             <Text noOfLines={2}>{description}</Text>
                         </Suspense>
                     </VStack>
-                    <AddButton
-                        href={`/${useParams()["competenceCategory"]}/create`}
-                    />
-                    <Create />
+                    <AddButton />
                     <CompetenceCategoryGrid
                         initPack={getAllCompetences(slug)}
                     />

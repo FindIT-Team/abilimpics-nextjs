@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+import { notFound } from "next/navigation";
+import { ReactNode, use } from "react";
 import { getOneCompetenceCategory } from "@/entities/competence-categories";
 
 export async function generateMetadata({
@@ -14,8 +15,13 @@ export async function generateMetadata({
 
 export default function RootLayout({
     children,
+    params: { competenceCategory },
 }: Readonly<{
     children: ReactNode;
+    params: { competenceCategory: string };
 }>) {
+    const obj = use(getOneCompetenceCategory(competenceCategory));
+    if (!obj) notFound();
+
     return <>{children}</>;
 }
