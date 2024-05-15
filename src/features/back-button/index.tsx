@@ -1,10 +1,11 @@
 "use client";
 
-import { Button } from "@chakra-ui/react";
+import { Button, Icon } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams, usePathname } from "next/navigation";
+import { RiArrowLeftLine } from "react-icons/ri";
 
-export function BackButton() {
+export function BackButton({ isIcon = false }: Readonly<{ isIcon?: boolean }>) {
     const { competence, competenceCategory } = useParams();
     const pathname = usePathname();
 
@@ -21,13 +22,14 @@ export function BackButton() {
         <Button
             as={NextLink}
             href={`/${path}`}
+            hidden={path === pathname}
             variant={"ghost"}
             color={"whiteAlpha.700"}
             _hover={{ color: "whiteAlpha.900" }}
             _active={{ color: "whiteAlpha.700" }}
             padding={0}
         >
-            Назад
+            {isIcon ? <Icon as={RiArrowLeftLine} /> : "Назад"}
         </Button>
     );
 }

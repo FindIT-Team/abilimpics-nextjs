@@ -19,6 +19,11 @@ export async function action(_prevState: any, formData: FormData) {
 
     const ext = file.name.slice(file.name.lastIndexOf("."));
 
+    if (ext.length <= 1)
+        return {
+            errors: { files: ["Невозможно определить расширение файла"] },
+        };
+
     const fileId = createId();
     const webPath = `files/${fileId}${ext}`;
 

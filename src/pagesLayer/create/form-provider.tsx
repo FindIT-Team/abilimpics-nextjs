@@ -1,9 +1,10 @@
 "use client";
 
-import { HStack, useToast, VStack } from "@chakra-ui/react";
+import { useToast, VStack } from "@chakra-ui/react";
 import { ReactNode, useEffect } from "react";
 import { useFormState } from "react-dom";
-import { BackButton, SubmitButton } from "@/shared";
+import { BackButton } from "@/features/back-button";
+import { SubmitButton } from "@/shared";
 
 export function FormProvider({
     children,
@@ -36,21 +37,14 @@ export function FormProvider({
     }, [state]);
 
     return (
-        <HStack
-            justifyContent={"center"}
-            as={"main"}
-            marginY={10}
-            userSelect={"none"}
-        >
-            <form action={formAction}>
-                <VStack padding={5} spacing={5} position={"relative"}>
-                    {children}
-                    <VStack>
-                        <SubmitButton />
-                        <BackButton />
-                    </VStack>
+        <form action={formAction}>
+            <VStack padding={5} spacing={5} position={"relative"}>
+                {children}
+                <VStack>
+                    <SubmitButton />
+                    <BackButton />
                 </VStack>
-            </form>
-        </HStack>
+            </VStack>
+        </form>
     );
 }

@@ -28,6 +28,7 @@ export function NavLinks() {
                     transition={"ease-in-out 150ms"}
                     opacity={0.6}
                     _hover={{ opacity: 1 }}
+                    textAlign={"center"}
                 >
                     {label}
                 </Link>
