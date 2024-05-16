@@ -38,10 +38,10 @@ export function FormProvider({
 
     return (
         <form action={formAction}>
-            <VStack padding={5} spacing={5} position={"relative"}>
+            <VStack padding={5} spacing={5}>
                 {children}
                 <VStack>
-                    <SubmitButton />
+                    <SubmitButton label={"Создать"} />
                     <BackButton />
                 </VStack>
             </VStack>

@@ -9,7 +9,7 @@ export function NavLinks() {
         { label: "Новости", href: "/#news" },
         { label: "Основные задачи", href: "/#tasks" },
         { label: "О нас", href: "/about" },
-        { label: "Личный кабинет", href: "/login" },
+        { label: "Личный кабинет", href: "/auth/login" },
     ];
 
     return (

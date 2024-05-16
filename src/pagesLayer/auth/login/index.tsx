@@ -1,28 +1,67 @@
-import { HStack } from "@chakra-ui/react";
-import { ActionFunctionArgs } from "@remix-run/node";
-import { parseFormData } from "remix-hook-form";
-import { LoginForm } from "../../../widgets/auth/login-form";
-import {
-  createUserSession,
-  LoginSchema,
-  validateUser,
-} from "../../../features/auth";
+"use client";
 
-export async function action({ request }: ActionFunctionArgs) {
-  const userData = await parseFormData<LoginSchema>(request);
-  const userId = await validateUser(userData.email, userData.password);
+import { Link } from "@chakra-ui/next-js";
+import { Button, Heading, Input, VStack } from "@chakra-ui/react";
+import NextLink from "next/link";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { LoginSchema } from "@/features/auth";
+import { PendingProvider, SubmitButton } from "@/shared";
 
-  if (userId) {
-    return createUserSession(request, userId);
-  }
+export function Login() {
+    const {
+        register,
+        formState: { errors, dirtyFields },
+    } = useForm<LoginSchema>();
 
-  return new Response("Unauthorized", { status: 401 });
-}
+    const fields = ["email", "password"];
 
-export default function Login() {
-  return (
-    <HStack justifyContent={"center"} marginY={10}>
-      <LoginForm />
-    </HStack>
-  );
+    const isDisabled =
+        Object.entries(errors).some(([, value]) => value) ||
+        !fields.every((field) => field in dirtyFields);
+
+    return (
+        <>
+            <Heading textAlign={"center"}>
+                Добро пожаловать в цифровую платформу всероссийских чемпионатных
+                движения
+                <br />
+                &quot;Абилимпикс Москва&quot;
+            </Heading>
+            <VStack width={"full"}>
+                <PendingProvider error={errors.email?.message}>
+                    <Input
+                        variant={"filled"}
+                        placeholder={"Почта"}
+                        {...register("email")}
+                    />
+                </PendingProvider>
+                <PendingProvider error={errors.password?.message}>
+                    <Input
+                        variant={"filled"}
+                        placeholder={"Пароль"}
+                        type={"password"}
+                        {...register("password")}
+                    />
+                </PendingProvider>
+                <Link href={"/forgot-password"} alignSelf={"end"}>
+                    Забыли пароль?
+                </Link>
+            </VStack>
+            <VStack>
+                <SubmitButton label={"Войти"} isDisabled={isDisabled} />
+                <Button
+                    as={NextLink}
+                    href={`/auth/registration`}
+                    variant={"ghost"}
+                    color={"whiteAlpha.700"}
+                    _hover={{ color: "whiteAlpha.900" }}
+                    _active={{ color: "whiteAlpha.700" }}
+                    padding={0}
+                >
+                    Регистрация
+                </Button>
+            </VStack>
+        </>
+    );
 }
