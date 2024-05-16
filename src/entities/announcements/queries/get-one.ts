@@ -1,12 +1,21 @@
 "use server";
 
-import { prisma } from "@/shared";
 import { cache } from "react";
+import { prisma } from "@/shared";
 
-export const getOneAnnouncement = cache(async function (slug: string) {
+export const getOneAnnouncement = cache(async function (
+    competenceCategory: string,
+    competence: string,
+    slug: string,
+) {
     return prisma.announcement.findUnique({
         where: {
             slug,
+            competence: {
+                competenceCategory: {
+                    slug: competenceCategory,
+                },
+            },
         },
         select: {
             title: true,
@@ -17,11 +26,11 @@ export const getOneAnnouncement = cache(async function (slug: string) {
                     title: true,
                     competenceCategory: {
                         select: {
-                            slug: true
-                        }
-                    }
-                }
+                            slug: true,
+                        },
+                    },
+                },
             },
-        }
-    })
-})
+        },
+    });
+});

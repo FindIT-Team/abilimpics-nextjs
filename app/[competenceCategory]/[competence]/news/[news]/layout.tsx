@@ -1,21 +1,19 @@
 import { notFound } from "next/navigation";
 import { ReactNode, use } from "react";
-import { getOneAnnouncement } from "@/entities/announcements/queries/get-one";
+import { getOneNews } from "@/entities/news/queries/get-one";
 
 export default function Layout({
     children,
-    params: { announcement, competenceCategory, competence },
+    params: { competenceCategory, competence, news },
 }: Readonly<{
     children: ReactNode;
     params: {
         competenceCategory: string;
         competence: string;
-        announcement: string;
+        news: string;
     };
 }>) {
-    const obj = use(
-        getOneAnnouncement(competenceCategory, competence, announcement),
-    );
+    const obj = use(getOneNews(competenceCategory, competence, news));
     if (!obj) notFound();
 
     return <>{children}</>;
