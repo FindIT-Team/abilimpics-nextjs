@@ -9,7 +9,6 @@ import {
     PendingProvider,
     SingleFileField,
     SlugField,
-    SubmitButton,
 } from "@/shared";
 import { action } from "./action";
 
@@ -43,7 +42,6 @@ export function CreateNews() {
                 />
                 <ExtraRouteInfo />
             </VStack>
-            <SubmitButton />
         </FormProvider>
     );
 }

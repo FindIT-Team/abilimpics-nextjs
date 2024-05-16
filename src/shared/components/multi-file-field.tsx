@@ -46,7 +46,7 @@ export function MultiFileField({
 
     return (
         <PendingProvider>
-            <FormLabel>{label}</FormLabel>
+            <FormLabel htmlFor={""}>{label}</FormLabel>
             <Input
                 type={"file"}
                 display={"none"}
@@ -92,12 +92,7 @@ export function MultiFileField({
                     opacity: 0.7,
                 }}
             >
-                <Text
-                    textAlign={"center"}
-                    // _groupDisabled={{ color: "whiteAlpha.700" }}
-                >
-                    Перетащите файл сюда или
-                </Text>
+                <Text textAlign={"center"}>Перетащите файлы сюда или</Text>
                 <Button
                     onClick={() => fileRef.current?.click()}
                     transition={"ease-in-out 150ms"}
@@ -110,11 +105,11 @@ export function MultiFileField({
                         background: "whiteAlpha.200",
                     }}
                 >
-                    Выбрать файл
+                    Выбрать файлы
                 </Button>
                 {selectedFiles.length > 0 && (
                     <Box position={"absolute"} bottom={5}>
-                        <Text textAlign={"center"}>
+                        <Text textAlign={"center"} fontSize={"sm"}>
                             Выбранные файлы:{" "}
                             {selectedFiles.length > 3
                                 ? selectedFiles

@@ -20,6 +20,7 @@ export const theme = extendTheme({
             },
             body: {
                 bg: mode("gray.100", "#0d1117")(props),
+                textWrap: "balance",
             },
         }),
     },

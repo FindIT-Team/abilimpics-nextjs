@@ -4,12 +4,7 @@ import { Heading, Input, Textarea, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { ExtraRouteInfo, FormProvider } from "@/pages/create";
-import {
-    PendingProvider,
-    SingleFileField,
-    SlugField,
-    SubmitButton,
-} from "@/shared";
+import { PendingProvider, SingleFileField, SlugField } from "@/shared";
 import { action } from "./action";
 
 export function CreateTask() {
@@ -37,7 +32,6 @@ export function CreateTask() {
                 />
                 <ExtraRouteInfo />
             </VStack>
-            <SubmitButton />
         </FormProvider>
     );
 }

@@ -4,25 +4,22 @@ import { Grid } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { MoreButton } from "@/features/more-button";
-import { CompetenceCard } from "@/entities/competences";
-import { getAllCompetences } from "@/entities/competences/queries";
+import { FileCard, getAllFiles } from "@/entities/files";
 import { Packer } from "@/shared";
 
-export function CompetenceCategoryGrid({
-    initPack,
-}: {
-    initPack: Promise<unknown[]>;
-}) {
-    // TODO: IT'S WIDGET
-    const { competenceCategory } = useParams();
+export function Files({ initPack }: { initPack: Promise<unknown[]> }) {
+    const { competenceCategory, competence } = useParams();
     const [packs, setPacks] = useState([initPack]);
 
     return (
         <>
             <Grid
+                width={"full"}
+                minWidth={"800px"}
+                gridTemplateColumns={"repeat(1, minmax(1fr, 800px)"}
+                gridAutoRows={"200px"}
                 gap={5}
                 padding={5}
-                gridAutoColumns={"1000px"}
                 placeContent={"center center"}
             >
                 {packs.map((pack, index) => (
@@ -34,12 +31,12 @@ export function CompetenceCategoryGrid({
                                     .fill(null)
                                     .map((_, index) => (
                                         <div key={index}>loading..</div>
-                                        // <CompetenceCardSkeleton key={index} />
+                                        // <FileCardSkeleton key={index} />
                                     ))}
                             </>
                         }
                     >
-                        <Packer Delegate={CompetenceCard} packPromise={pack} />
+                        <Packer Delegate={FileCard} packPromise={pack} />
                     </Suspense>
                 ))}
             </Grid>
@@ -47,7 +44,11 @@ export function CompetenceCategoryGrid({
                 packs={packs}
                 setPacks={setPacks}
                 fetchFunc={(offset?: string) =>
-                    getAllCompetences(competenceCategory as string, offset)
+                    getAllFiles(
+                        competenceCategory as string,
+                        competence as string,
+                        offset,
+                    )
                 }
             />
         </>

@@ -9,8 +9,8 @@ import { getAllNews } from "@/entities/news/queries";
 import { Packer } from "@/shared";
 
 export function News({ initPack }: { initPack: Promise<unknown[]> }) {
-    const [packs, setPacks] = useState([initPack]);
     const { competence, competenceCategory } = useParams();
+    const [packs, setPacks] = useState([initPack]);
 
     return (
         <>
@@ -23,6 +23,7 @@ export function News({ initPack }: { initPack: Promise<unknown[]> }) {
                 placeContent={"center center"}
             >
                 {packs.map((pack, index) => (
+                    // todo: fallback
                     <Suspense key={index}>
                         <Packer Delegate={NewsCard} packPromise={pack} />
                     </Suspense>
@@ -33,9 +34,9 @@ export function News({ initPack }: { initPack: Promise<unknown[]> }) {
                 setPacks={setPacks}
                 fetchFunc={(offset) =>
                     getAllNews(
-                        offset,
-                        competence as string,
                         competenceCategory as string,
+                        competence as string,
+                        offset,
                     )
                 }
             />

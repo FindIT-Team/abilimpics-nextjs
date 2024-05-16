@@ -18,6 +18,8 @@ ENV DATABASE_URL=postgresql://${DB_USERNAME}:${DB_PASSWD}@${DB_HOST}:${DB_PORT}/
 ENV PORT=80
 EXPOSE ${PORT}
 
+ENV NEXT_TELEMETRY_DISABLED=1
+
 HEALTHCHECK --interval=5s --timeout=10s --start-period=5s --retries=3 CMD [ "sh", "-c", "curl -f http://localhost:${PORT} || exit 1" ]
 
 FROM base as loading-stage

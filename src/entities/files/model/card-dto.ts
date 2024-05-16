@@ -3,4 +3,6 @@ export interface FileCardDto {
 
     type: string;
     size: string;
+
+    webPath: string;
 }

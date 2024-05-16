@@ -4,12 +4,11 @@ import { Grid } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { MoreButton } from "@/features/more-button";
-import { FileCard, getAllFiles } from "@/entities/files";
+import { CompetenceCard, getAllCompetences } from "@/entities/competences";
 import { Packer } from "@/shared";
 
-export function FileGrid({ initPack }: { initPack: Promise<unknown[]> }) {
-    // TODO: IT'S WIDGET
-    const { competenceCategory, competence } = useParams();
+export function Competences({ initPack }: { initPack: Promise<unknown[]> }) {
+    const { competenceCategory } = useParams();
     const [packs, setPacks] = useState([initPack]);
 
     return (
@@ -29,12 +28,12 @@ export function FileGrid({ initPack }: { initPack: Promise<unknown[]> }) {
                                     .fill(null)
                                     .map((_, index) => (
                                         <div key={index}>loading..</div>
-                                        // <FileCardSkeleton key={index} />
+                                        // <CompetenceCardSkeleton key={index} />
                                     ))}
                             </>
                         }
                     >
-                        <Packer Delegate={FileCard} packPromise={pack} />
+                        <Packer Delegate={CompetenceCard} packPromise={pack} />
                     </Suspense>
                 ))}
             </Grid>
@@ -42,11 +41,7 @@ export function FileGrid({ initPack }: { initPack: Promise<unknown[]> }) {
                 packs={packs}
                 setPacks={setPacks}
                 fetchFunc={(offset?: string) =>
-                    getAllFiles(
-                        competenceCategory as string,
-                        competence as string,
-                        offset,
-                    )
+                    getAllCompetences(competenceCategory as string, offset)
                 }
             />
         </>

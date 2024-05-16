@@ -7,11 +7,7 @@ import { FaPlus } from "react-icons/fa";
 
 export function AddButton({ segment }: { segment?: string }) {
     const pathname = usePathname();
-    console.log(
-        pathname,
-        segment,
-        segment ? `${pathname}/${segment}/create` : `${pathname}/create`,
-    );
+
     return (
         <Button
             as={NextLink}

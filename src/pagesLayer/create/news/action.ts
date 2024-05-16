@@ -1,9 +1,21 @@
 "use server";
 
-import { deleteFile, saveFile } from "@/features/file-control";
+import { isImageUnique } from "@/pages/create/is-image-unique";
+import { newsSchema, NewsSchema } from "@/pages/create/schemas";
+import { deleteImage, saveImage } from "@/features/image-control";
 import { createId, prisma } from "@/shared";
 
-export async function action(formData: FormData) {
+export async function action(_prevState: any, formData: FormData) {
+    const data = Object.fromEntries(formData.entries()) as NewsSchema;
+
+    const check = newsSchema.safeParse(data);
+    if (!check.success)
+        return {
+            errors: check.error.flatten().fieldErrors,
+        };
+
+    const { title, content, slug } = data;
+
     const images: {
         id: string;
         image: File;
@@ -16,54 +28,62 @@ export async function action(formData: FormData) {
         .map((image) => ({ id: createId(), image, systemPath: "" }))
         .map((obj) => ({ ...obj, webPath: `news/${obj.id}` }));
 
-    for (const { webPath } of images)
-        if (
-            await prisma.image.findUnique({
-                where: { webPath },
-            })
-        )
-            throw new Error("Image already exists");
+    for (const { webPath } of images) {
+        const isImageUniqueCheck = await isImageUnique(webPath);
+        if (!isImageUniqueCheck.success) return isImageUniqueCheck;
+    }
+
     try {
         for (const obj of images) {
             Object.assign(obj, {
-                systemPath: await saveFile(obj.image, obj.id, "news"),
+                systemPath: await saveImage(obj.image, obj.id, "news"),
             });
         }
     } catch (e) {
         images.forEach(({ systemPath }) => {
             if (systemPath === "") return;
-            deleteFile(systemPath);
-            throw e;
+            deleteImage(systemPath);
         });
+        return {
+            errors: { images: ["Array of images includes non-image files"] },
+        };
     }
 
-    return prisma.news.create({
-        data: {
-            title: formData.get("title") as string,
-            content: formData.get("content") as string,
-            slug: formData.get("slug") as string,
-            competence: {
-                connect: {
-                    slug: formData.get("competence") as string,
-                    competenceCategory: {
-                        slug: formData.get("competenceCategory") as string,
+    try {
+        await prisma.news.create({
+            data: {
+                title,
+                content,
+                slug,
+                competence: {
+                    connect: {
+                        slug: formData.get("competence") as string,
+                        competenceCategory: {
+                            slug: formData.get("competenceCategory") as string,
+                        },
+                    },
+                },
+                previewImage: {
+                    create: {
+                        webPath: images[0].webPath,
+                        systemPath: images[0].systemPath,
+                    },
+                },
+                images: {
+                    createMany: {
+                        data: images
+                            .slice(1)
+                            .map(({ webPath, systemPath }) => ({
+                                webPath,
+                                systemPath,
+                            })),
                     },
                 },
             },
-            previewImage: {
-                create: {
-                    webPath: images[0].webPath,
-                    systemPath: images[0].systemPath,
-                },
-            },
-            images: {
-                createMany: {
-                    data: images.slice(1).map(({ webPath, systemPath }) => ({
-                        webPath,
-                        systemPath,
-                    })),
-                },
-            },
-        },
-    });
+        });
+    } catch (e) {
+        return { errors: { database: [(e as Error).message] } };
+    }
+
+    return { message: "OK" };
 }

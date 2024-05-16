@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ReactNode } from "react";
+import { MainBox } from "@/app/components";
 import { Footer } from "@/widgets/footer";
 import { Navbar } from "@/widgets/navbar";
 import { BackToTop } from "@/features/back-to-top";
@@ -19,7 +20,7 @@ export default function RootLayout({
                 <Providers>
                     <BackToTop />
                     <Navbar />
-                    {children}
+                    <MainBox>{children}</MainBox>
                     <Footer />
                 </Providers>
             </body>

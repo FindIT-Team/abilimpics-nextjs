@@ -23,7 +23,11 @@ export function NewsCard({ data }: { data: unknown }) {
                     src={`${process.env.NEXT_PUBLIC_STORAGE}/${previewImage.webPath}`}
                     alt={""}
                 />
-                <VStack alignItems={"stretch"} justifyContent={"center"}>
+                <VStack
+                    flexGrow={1}
+                    alignItems={"stretch"}
+                    justifyContent={"center"}
+                >
                     <CardHeader padding={0}>
                         <Heading fontSize={"2xl"} noOfLines={1}>
                             {title}

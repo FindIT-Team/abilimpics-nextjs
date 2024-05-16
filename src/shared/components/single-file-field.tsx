@@ -32,7 +32,7 @@ export function SingleFileField({
 
     return (
         <PendingProvider>
-            <FormLabel>{label}</FormLabel>
+            <FormLabel htmlFor={""}>{label}</FormLabel>
             <Input
                 type={"file"}
                 display={"none"}
@@ -77,12 +77,7 @@ export function SingleFileField({
                     opacity: 0.7,
                 }}
             >
-                <Text
-                    textAlign={"center"}
-                    // _groupDisabled={{ color: "whiteAlpha.700" }}
-                >
-                    Перетащите файл сюда или
-                </Text>
+                <Text textAlign={"center"}>Перетащите файл сюда или</Text>
                 <Button
                     onClick={() => fileRef.current?.click()}
                     transition={"ease-in-out 150ms"}
@@ -99,8 +94,10 @@ export function SingleFileField({
                 </Button>
                 {selectedFiles.length > 0 && (
                     <Box position={"absolute"} bottom={5}>
-                        Выбранные файлы:{" "}
-                        {selectedFiles.map((file) => file.name + " ")}
+                        <Text textAlign={"center"} fontSize={"sm"}>
+                            Выбранный файл:{" "}
+                            {selectedFiles.map((file) => file.name + " ")}
+                        </Text>
                     </Box>
                 )}
             </Center>
