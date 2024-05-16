@@ -1,6 +1,6 @@
 import { use } from "react";
 import { News } from "@/pages/news";
-import { getOneNews } from "@/entities/news/queries/get-one";
+import { getOneNews } from "@/entities/news";
 
 export default function Page({
     params: { competenceCategory, competence, news },

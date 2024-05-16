@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { ReactNode, use } from "react";
-import { getOneNews } from "@/entities/news/queries/get-one";
+import { getOneNews } from "@/entities/news";
 
 export default function Layout({
     children,

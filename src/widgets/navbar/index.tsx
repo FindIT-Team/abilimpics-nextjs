@@ -1,6 +1,7 @@
-import { Heading, HStack } from "@chakra-ui/react";
+import { Heading, HStack, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { NavLinks } from "@/widgets/navbar/nav-links";
+import { BackButton } from "@/features/back-button";
 import { Image } from "@/shared";
 
 export function Navbar() {
@@ -19,10 +20,17 @@ export function Navbar() {
             gap={5}
         >
             <HStack as={NextLink} href={"/"}>
-                <Image src={"/logo.webp"} height={10} />
+                <Image
+                    src={"/logo.webp"}
+                    height={10}
+                    alt={"Логотип Абилимпикса"}
+                />
                 <Heading fontSize={"3xl"}>Абилимпикс</Heading>
             </HStack>
             <NavLinks />
+            <VStack position={"absolute"} top={"120px"} left={"20px"}>
+                <BackButton isIcon={true} />
+            </VStack>
         </HStack>
     );
 }
