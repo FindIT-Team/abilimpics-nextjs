@@ -9,6 +9,7 @@ import { getAllFiles } from "@/entities/files";
 import { getAllNews } from "@/entities/news";
 import { getAllTasks } from "@/entities/tasks";
 import { AddButton, HeadingUpper } from "@/shared";
+import { RoleRestricted } from "@/shared/components/role-restricted";
 
 export function Competence({ init }: { init: unknown }) {
     const { title, slug, competenceCategory } = init as CompetenceDto;
@@ -29,7 +30,9 @@ export function Competence({ init }: { init: unknown }) {
             </VStack>
             <VStack spacing={8}>
                 <HeadingUpper>Документация</HeadingUpper>
-                <AddButton segment={"files"} />
+                <RoleRestricted role={["ADMIN", slug]}>
+                    <AddButton segment={"files"} />
+                </RoleRestricted>
                 <Files initPack={initFiles} />
             </VStack>
             <VStack spacing={8}>
@@ -38,17 +41,23 @@ export function Competence({ init }: { init: unknown }) {
             <VStack spacing={8}></VStack>
             <VStack spacing={8}>
                 <HeadingUpper>Новости</HeadingUpper>
-                <AddButton segment={"news"} />
+                <RoleRestricted role={["ADMIN", slug]}>
+                    <AddButton segment={"news"} />
+                </RoleRestricted>
                 <News initPack={initNews} />
             </VStack>
             <VStack spacing={8}>
                 <HeadingUpper>Объявления</HeadingUpper>
-                <AddButton segment={"announcements"} />
+                <RoleRestricted role={["ADMIN", slug]}>
+                    <AddButton segment={"announcements"} />
+                </RoleRestricted>
                 <Announcements initPack={initAnnouncements} />
             </VStack>
             <VStack spacing={8}>
                 <HeadingUpper>Основные задачи</HeadingUpper>
-                <AddButton segment={"tasks"} />
+                <RoleRestricted role={["ADMIN", slug]}>
+                    <AddButton segment={"tasks"} />
+                </RoleRestricted>
                 <Tasks initPack={initTasks} />
             </VStack>
         </>

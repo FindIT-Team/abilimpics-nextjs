@@ -4,8 +4,16 @@ import { isImageUnique } from "@/pages/create/is-image-unique";
 import { saveImage } from "@/features/image-control";
 import { createId, prisma } from "@/shared";
 import { CompetenceSchema, competenceSchema } from "../schemas";
+import { hasRole } from "@/features/roles/actions/get";
 
 export async function competenceCreate(_prevState: any, formData: FormData) {
+    if (!(await hasRole("ADMIN")))
+        return {
+            errors: {
+                permissions: ["У вас нет права на создание новой компетенции"],
+            },
+        };
+
     const data = Object.fromEntries(formData.entries()) as CompetenceSchema;
 
     const check = competenceSchema.safeParse(data);
@@ -26,7 +34,7 @@ export async function competenceCreate(_prevState: any, formData: FormData) {
         const systemPath = await saveImage(
             formData.get("image") as File,
             imageId,
-            "competences",
+            "competences"
         );
 
         await prisma.competence.create({

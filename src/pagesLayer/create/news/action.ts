@@ -4,8 +4,16 @@ import { isImageUnique } from "@/pages/create/is-image-unique";
 import { newsSchema, NewsSchema } from "@/pages/create/schemas";
 import { deleteImage, saveImage } from "@/features/image-control";
 import { createId, prisma } from "@/shared";
+import { hasRole } from "@/features/roles/actions/get";
 
 export async function action(_prevState: any, formData: FormData) {
+    if (!(await hasRole(["ADMIN", formData.get("competence") as string])))
+        return {
+            errors: {
+                permissions: ["У вас нет права на создание новой новости"],
+            },
+        };
+
     const data = Object.fromEntries(formData.entries()) as NewsSchema;
 
     const check = newsSchema.safeParse(data);

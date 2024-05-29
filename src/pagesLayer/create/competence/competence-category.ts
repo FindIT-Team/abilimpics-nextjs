@@ -4,11 +4,19 @@ import { isImageUnique } from "@/pages/create/is-image-unique";
 import { saveImage } from "@/features/image-control";
 import { createId, prisma } from "@/shared";
 import { competenceCategorySchema, CompetenceCategorySchema } from "../schemas";
+import { hasRole } from "@/features/roles/actions/get";
 
 export async function competenceCategoryCreate(
     _prevState: any,
     formData: FormData,
 ) {
+    if (!(await hasRole("ADMIN")))
+        return {
+            errors: {
+                permissions: ["У вас нет права на создание новой компетенции"],
+            },
+        };
+
     const data = Object.fromEntries(
         formData.entries(),
     ) as CompetenceCategorySchema;

@@ -1,9 +1,17 @@
 "use server";
 
+import { hasRole } from "@/features/roles/actions/get";
 import { AnnouncementSchema, announcementSchema } from "@/pages/create/schemas";
 import { prisma } from "@/shared";
 
 export async function action(_prevState: any, formData: FormData) {
+    if (!(await hasRole(["ADMIN", formData.get("competence") as string])))
+        return {
+            errors: {
+                permissions: ["У вас нет права на создание нового объявления"],
+            },
+        };
+
     const data = Object.fromEntries(formData.entries()) as AnnouncementSchema;
 
     const check = announcementSchema.safeParse(data);

@@ -4,6 +4,7 @@ import { Competences } from "@/widgets/competences";
 import { CompetenceCategoryDto } from "@/entities/competence-categories";
 import { getAllCompetences } from "@/entities/competences";
 import { AddButton, HeadingUpper } from "@/shared";
+import { RoleRestricted } from "@/shared/components/role-restricted";
 
 export function CompetenceCategory({ init }: { init: unknown }) {
     const { title, description, slug } = init as CompetenceCategoryDto;
@@ -17,7 +18,9 @@ export function CompetenceCategory({ init }: { init: unknown }) {
                         <Text opacity={0.8}>{description}</Text>
                     </Suspense>
                 </VStack>
-                <AddButton />
+                <RoleRestricted role="ADMIN">
+                    <AddButton />
+                </RoleRestricted>
                 <Competences initPack={getAllCompetences(slug)} />
             </VStack>
         </>

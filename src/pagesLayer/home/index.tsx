@@ -11,6 +11,7 @@ import { getAllNews } from "@/entities/news";
 import { getAllTasks } from "@/entities/tasks";
 import { AddButton, HeadingUpper } from "@/shared";
 import { Header } from "./header";
+import { RoleRestricted } from "@/shared/components/role-restricted";
 
 export function Home() {
     return (
@@ -18,7 +19,9 @@ export function Home() {
             <VStack spacing={8} id={"competence-categories"}>
                 <Header />
                 <SearchCompetence />
-                <AddButton />
+                <RoleRestricted role="ADMIN">
+                    <AddButton />
+                </RoleRestricted>
                 <CompetenceCategories initPack={getAllCompetenceCategories()} />
             </VStack>
             <VStack spacing={5}>
